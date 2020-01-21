@@ -6,5 +6,6 @@ class Sprite {
         this.order = a.order;
         this.delay = a.delay;
         this.group = a.group;
+        this.time = 0;
     }
 }

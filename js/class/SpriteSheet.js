@@ -11,8 +11,8 @@ class SpriteSheet {
 		this.height = 32;
 		this.speed = 1;
 		this.sprites = {};
-		this.img=new Image();
-		this.spriteGroup="right";
+		this.img = new Image();
+		this.spriteGroup = "right";
 		this.countAnim = 0;
 
 
@@ -39,9 +39,17 @@ class SpriteSheet {
 		for (let index = 0; index < array.length; index++) {
 			const obj = array[index];
 			if (!this.sprites[obj.group]) {
-				this.sprites[obj.group] = [];
+				let a = { 'sprites': [], 'count': 0 };
+				this.sprites[obj.group] = a;
 			}
-			this.sprites[obj.group].push(new Sprite(obj));
+			this.sprites[obj.group]['sprites'].push(new Sprite(obj));
+
+			let count = 0;
+			for (let index = 0; index < this.sprites[obj.group]['sprites'].length; index++) {
+				count += this.sprites[obj.group]['sprites'][index].delay;
+				this.sprites[obj.group]['sprites'][index].time = count;
+			}
+			this.sprites[obj.group]['count'] = count;
 		}
 
 	}
@@ -67,18 +75,18 @@ class SpriteSheet {
 		if (this.mvLeft || this.mvUp || this.mvRight || this.mvDown) {
 			//Caso qualquer seta seja pressionada, o contador de animação é incrementado
 			this.countAnim++;
-			if (this.countAnim >= 15) {
+			if (this.countAnim >= this.sprites[this.spriteGroup].count) {
 				this.countAnim = 0;
 			}
 
-			let turn;
-			for (let index = 0; index < this.sprites[this.spriteGroup].length; index++) {
-				if (this.sprites[this.spriteGroup][index].delay > this.countAnim) {
+			let turn=0;
+			for (let index = 0; index < this.sprites[this.spriteGroup]['sprites'].length; index++) {
+				turn=index;
+				if (this.sprites[this.spriteGroup]['sprites'][index].time > this.countAnim) {
 					break;
 				}
-				turn = index;
 			}
-			this.img = this.sprites[this.spriteGroup][turn].img;
+			this.img = this.sprites[this.spriteGroup]['sprites'][turn].img;
 		} else {
 			this.countAnim = 0;
 		}

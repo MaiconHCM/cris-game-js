@@ -9,19 +9,19 @@ window.onload = function () {
 		{
 			src:"img/1.png",
 			order:0,
-			delay:0,
+			delay:10,
 			group:"right"
 		},
 		{
 			src:"img/2.png",
 			order:0,
-			delay:5,
+			delay:10,
 			group:"right"
 		},
 		{
 			src:"img/3.png",
 			order:0,
-			delay:10,
+			delay:150,
 			group:"right"
 		},
 	])
